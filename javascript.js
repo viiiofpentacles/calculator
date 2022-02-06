@@ -11,7 +11,11 @@ const equalsButton = document.querySelector(".equalsButton");
 
 
 function updateDisplay () {
-    if(result != 0){
+    if(value1 == result && operator != 0 && value2 != 0){
+        display.textContent = value2;
+    }else if(value1 == result && operator != 0){
+        display.textContent = result;
+    }else if(result != 0){
         display.textContent = result;
     }else if(value1 != 0 && value2 === 0){
         display.textContent = value1;
@@ -34,6 +38,7 @@ function allClear () {
     value2 = 0;
     result = 0;
     operator = 0;
+    decimalButton.disabled = false;
     updateDisplay();
 };
 
@@ -55,8 +60,10 @@ function chooseNumber () {
 function addDecimal () {
     if(operator===0){
         value1 += this.innerHTML;
+        decimalButton.disabled =true;
     }else {
         value2 += this.innerHTML;
+        decimalButton.disabled =true;
     }
 };
 
@@ -65,26 +72,44 @@ decimalButton.addEventListener("click", addDecimal);
 function chooseOperator () {
     if(value1 === 0){
         alert("You must input a number first.");
-    }else{
+    }else if (operator === 0){
         operator = this.innerHTML;
-    }
+        decimalButton.disabled =false;
+    }else {
+        getOutcome();
+        operator = this.innerHTML;
+        decimalButton.disabled =false;
+    };
 };
 
 function getOutcome () {
     if(operator == "+"){
-        result = (parseFloat(value1) + parseFloat(value2)).toFixed(4);
-        value1 = result;
+        if((parseFloat(value1) + parseFloat(value2)) % 1 === 0) {
+            result = (parseFloat(value1) + parseFloat(value2))
+        }else {result = (parseFloat(value1) + parseFloat(value2)).toFixed(2);
+        }value1 = result;
+         value2 = 0;
+         operator = 0;
     }else if(operator == "-"){
-        result = (parseFloat(value1) - parseFloat(value2)).toFixed(4);
-        value1 = result;
+        if((parseFloat(value1) - parseFloat(value2)) % 1 === 0) {
+            result = (parseFloat(value1) - parseFloat(value2))
+        }else {result = (parseFloat(value1) - parseFloat(value2)).toFixed(2);
+        }value1 = result;
+         value2 = 0;
     }else if(operator == "*"){
-        result = (parseFloat(value1) * parseFloat(value2)).toFixed(4);
-        value1 = result;
+        if((parseFloat(value1) * parseFloat(value2)) % 1 === 0) {
+            result = (parseFloat(value1) * parseFloat(value2))
+        }else {result = (parseFloat(value1) * parseFloat(value2)).toFixed(2);
+        }value1 = result;
+         value2 = 0;
     }else if(operator == "/" && value2 === "0"){
         result = ":)";
     }else if(operator == "/"){
-        result = (parseFloat(value1) / parseFloat(value2)).toFixed(4);
-        value1 = result;
+        if((parseFloat(value1) / parseFloat(value2)) % 1 === 0) {
+            result = (parseFloat(value1) / parseFloat(value2))
+        }else {result = (parseFloat(value1) / parseFloat(value2)).toFixed(2);
+        }value1 = result;
+         value2 = 0;
     }else{
         console.log("error");
     }
