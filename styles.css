@@ -65,6 +65,8 @@ button:hover{
     height: 45px;
 }
 
+.decimal,
+.equalsButton,
 .operator {
     background-color: rgb(190, 36, 113);
     border-radius: 5px;
