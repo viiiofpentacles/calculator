@@ -1,11 +1,12 @@
 const display = document.querySelector("#screen");
 const clearButton = document.querySelector(".clear");
 const numberButtons = document.querySelectorAll(".numbers").forEach(numberButtons => {
-    numberButtons.addEventListener("click", (chooseNumber));
+    numberButtons.addEventListener("click", chooseNumber);
 });
 const operatorButtons = document.querySelectorAll(".operator").forEach(operatorButtons => {
-    operatorButtons.addEventListener("click", (chooseOperator));
+    operatorButtons.addEventListener("click", chooseOperator);
 });
+const decimalButton = document.querySelector(".decimal");
 const equalsButton = document.querySelector(".equalsButton");
 
 
@@ -51,6 +52,16 @@ function chooseNumber () {
     updateDisplay();
 };
 
+function addDecimal () {
+    if(operator===0){
+        value1 += this.innerHTML;
+    }else {
+        value2 += this.innerHTML;
+    }
+};
+
+decimalButton.addEventListener("click", addDecimal);
+
 function chooseOperator () {
     if(value1 === 0){
         alert("You must input a number first.");
@@ -61,16 +72,18 @@ function chooseOperator () {
 
 function getOutcome () {
     if(operator == "+"){
-        result = parseFloat(value1) + parseFloat(value2);
+        result = (parseFloat(value1) + parseFloat(value2)).toFixed(4);
         value1 = result;
     }else if(operator == "-"){
-        result = parseFloat(value1) - parseFloat(value2);
+        result = (parseFloat(value1) - parseFloat(value2)).toFixed(4);
         value1 = result;
     }else if(operator == "*"){
-        result = parseFloat(value1) * parseFloat(value2);
+        result = (parseFloat(value1) * parseFloat(value2)).toFixed(4);
         value1 = result;
+    }else if(operator == "/" && value2 === "0"){
+        result = ":)";
     }else if(operator == "/"){
-        result = parseFloat(value1) / parseFloat(value2);
+        result = (parseFloat(value1) / parseFloat(value2)).toFixed(4);
         value1 = result;
     }else{
         console.log("error");
